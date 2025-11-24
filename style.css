@@ -252,6 +252,15 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+/* Spezifische Fade-In Animation für .s-block Sektionen */
+section.s-block.section {
+  opacity: 0;
+  transform: translateY(20px);
+}
+section.s-block.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 .s-block {
   background: var(--color-secondary);
 }
