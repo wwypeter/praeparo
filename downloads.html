@@ -8,200 +8,213 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Password Overlay */
-    #passwordOverlay, #cardPasswordOverlay {
+    /* Password Overlays */
+    .password-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(139, 195, 74, 0.95), rgba(76, 175, 80, 0.95));
+      background: linear-gradient(135deg, rgba(139, 195, 74, 0.96), rgba(76, 175, 80, 0.96));
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 10000;
     }
-    #passwordOverlay.hidden, #cardPasswordOverlay.hidden {
+    .password-overlay.hidden {
       display: none;
     }
     .password-box {
       background: #fff;
       padding: 40px;
       border-radius: 16px;
-      max-width: 420px;
+      max-width: 400px;
       width: 90%;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
     .password-box h2 {
-      margin-bottom: 10px;
-      color: var(--color-primary);
+      color: #8BC34A;
+      margin: 0 0 10px 0;
       font-size: 1.8rem;
     }
-    .password-box .subtitle {
+    .password-box p {
       color: #666;
-      margin-bottom: 30px;
+      margin: 0 0 25px 0;
       font-size: 0.95rem;
     }
-    .password-input-wrapper {
+    .password-input-group {
       position: relative;
       margin-bottom: 20px;
     }
-    .password-input-wrapper input {
+    .password-input-group input {
       width: 100%;
       padding: 14px 45px 14px 14px;
       border: 2px solid #e0e0e0;
       border-radius: 10px;
       font-size: 1rem;
       box-sizing: border-box;
-      transition: border-color 0.3s;
+      font-family: 'Poppins', sans-serif;
     }
-    .password-input-wrapper input:focus {
+    .password-input-group input:focus {
       outline: none;
-      border-color: var(--color-primary);
+      border-color: #8BC34A;
     }
-    .password-toggle {
+    .toggle-password {
       position: absolute;
-      right: 12px;
+      right: 14px;
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      width: 24px;
-      height: 24px;
-      opacity: 0.6;
-      transition: opacity 0.2s;
+      width: 22px;
+      height: 22px;
+      opacity: 0.5;
     }
-    .password-toggle:hover {
+    .toggle-password:hover {
       opacity: 1;
     }
     .password-box button {
       width: 100%;
       padding: 14px;
-      background: var(--color-primary);
+      background: #8BC34A;
       color: #fff;
       border: none;
       border-radius: 10px;
       font-size: 1.05rem;
       font-weight: 600;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 10px;
     }
     .password-box button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(139, 195, 74, 0.4);
+      background: #7CB342;
     }
-    .password-error {
+    .password-box button.cancel {
+      background: #999;
+    }
+    .password-box button.cancel:hover {
+      background: #777;
+    }
+    .error-msg {
       color: #e74c3c;
       font-size: 0.9rem;
-      margin-top: 15px;
+      margin-top: 10px;
       display: none;
-      font-weight: 500;
     }
-    .password-error.show {
+    .error-msg.show {
       display: block;
     }
 
     /* Downloads Grid */
+    .downloads-container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    .downloads-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .downloads-header h2 {
+      font-size: 2rem;
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+    .downloads-header p {
+      color: #666;
+      margin: 0;
+    }
     .downloads-grid {
       display: grid;
       grid-template-columns: repeat(10, 1fr);
       gap: 20px;
-      margin: 40px 0;
     }
     .download-card {
       background: #fff;
       border-radius: 12px;
       padding: 20px;
       text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       border: 2px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
     }
     .download-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-      border: 2px solid var(--color-primary);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      border-color: #8BC34A;
+    }
+    .download-card.active {
+      background: linear-gradient(135deg, #f1f8e9, #fff);
+      border-color: #8BC34A;
     }
     .download-card h3 {
       font-size: 1.2rem;
-      margin: 0 0 10px 0;
-      color: var(--color-dark);
+      margin: 0 0 8px 0;
+      color: #333;
     }
     .download-card p {
-      font-size: 0.9rem;
-      color: #666;
+      font-size: 0.85rem;
+      color: #999;
       margin: 0;
     }
-    .download-card.has-pdf {
-      background: linear-gradient(135deg, #f5f5f5, #fff);
-    }
-    .download-card.has-pdf:hover {
-      background: linear-gradient(135deg, #e8f5e9, #fff);
+    .download-card.active p {
+      color: #8BC34A;
+      font-weight: 600;
     }
 
     /* Responsive */
     @media (max-width: 1400px) {
-      .downloads-grid {
-        grid-template-columns: repeat(5, 1fr);
-      }
+      .downloads-grid { grid-template-columns: repeat(5, 1fr); }
     }
     @media (max-width: 900px) {
-      .downloads-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
+      .downloads-grid { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 600px) {
       .downloads-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
       }
-      .download-card {
-        padding: 15px;
-      }
-      .download-card h3 {
-        font-size: 1rem;
-      }
-      .password-box {
-        padding: 30px 20px;
-      }
+      .download-card { padding: 15px; }
+      .download-card h3 { font-size: 1rem; }
+      .password-box { padding: 30px 20px; }
     }
   </style>
 </head>
 <body>
 
   <!-- Main Password Overlay -->
-  <div id="passwordOverlay">
+  <div id="mainPasswordOverlay" class="password-overlay">
     <div class="password-box">
       <h2>🔒 Geschützter Bereich</h2>
-      <p class="subtitle">Bitte geben Sie das Passwort ein, um fortzufahren</p>
-      <div class="password-input-wrapper">
-        <input type="password" id="passwordInput" placeholder="Passwort eingeben">
-        <svg class="password-toggle" onclick="togglePasswordVisibility('passwordInput', this)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <p>Bitte geben Sie das Passwort ein</p>
+      <div class="password-input-group">
+        <input type="password" id="mainPassword" placeholder="Passwort">
+        <svg class="toggle-password" onclick="togglePassword('mainPassword')" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
           <circle cx="12" cy="12" r="3"></circle>
         </svg>
       </div>
-      <button onclick="checkPassword()">Zugang gewähren</button>
-      <div class="password-error" id="passwordError">❌ Falsches Passwort. Bitte versuchen Sie es erneut.</div>
+      <button onclick="checkMainPassword()">Zugang gewähren</button>
+      <div class="error-msg" id="mainError">❌ Falsches Passwort</div>
     </div>
   </div>
 
-  <!-- Card Password Overlay (for individual PDFs) -->
-  <div id="cardPasswordOverlay" class="hidden">
+  <!-- PDF Password Overlay -->
+  <div id="pdfPasswordOverlay" class="password-overlay hidden">
     <div class="password-box">
       <h2>🔐 PDF geschützt</h2>
-      <p class="subtitle" id="cardPasswordTitle">Bitte Passwort für diese Datei eingeben</p>
-      <div class="password-input-wrapper">
-        <input type="password" id="cardPasswordInput" placeholder="Passwort eingeben">
-        <svg class="password-toggle" onclick="togglePasswordVisibility('cardPasswordInput', this)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <p id="pdfTitle">Passwort für diese Datei</p>
+      <div class="password-input-group">
+        <input type="password" id="pdfPassword" placeholder="Passwort">
+        <svg class="toggle-password" onclick="togglePassword('pdfPassword')" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
           <circle cx="12" cy="12" r="3"></circle>
         </svg>
       </div>
-      <button onclick="checkCardPassword()">Download starten</button>
-      <button onclick="closeCardPasswordOverlay()" style="margin-top: 10px; background: #999;">Abbrechen</button>
-      <div class="password-error" id="cardPasswordError">❌ Falsches Passwort.</div>
+      <button onclick="checkPdfPassword()">Download starten</button>
+      <button class="cancel" onclick="closePdfOverlay()">Abbrechen</button>
+      <div class="error-msg" id="pdfError">❌ Falsches Passwort</div>
     </div>
   </div>
 
@@ -228,137 +241,52 @@
   </header>
 
   <!-- DOWNLOADS SECTION -->
-  <section id="downloads" class="section section-padding visible" style="background: var(--color-secondary); min-height: 80vh;">
-    <div class="container">
-      <h2 style="text-align: center; margin-bottom: 20px;">Downloads - Erste Schriftliche Abschlussprüfung</h2>
-      <p style="text-align: center; color: #666; margin-bottom: 40px;">Hier finden Sie alle verfügbaren Materialien zum Download</p>
+  <section class="section section-padding" style="background: var(--color-secondary); min-height: 80vh;">
+    <div class="downloads-container">
+      <div class="downloads-header">
+        <h2>Downloads - Erste Schriftliche Abschlussprüfung</h2>
+        <p>Hier finden Sie alle verfügbaren Materialien zum Download</p>
+      </div>
 
       <div class="downloads-grid">
-        <!-- Row 1: s1.1 - s1.10 -->
-        <div class="download-card has-pdf" onclick="requestPdfDownload('s1.1', 'pdfs/test.pdf', 'test123')">
+        <!-- Row 1 -->
+        <div class="download-card active" onclick="requestDownload('s1.1', 'pdfs/test.pdf', 'test123')">
           <h3>s1.1</h3>
           <p>📄 PDF verfügbar</p>
         </div>
-        <div class="download-card">
-          <h3>s1.2</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s1.3</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s1.4</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s1.5</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s1.6</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s1.7</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s1.8</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s1.9</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s1.10</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
+        <div class="download-card"><h3>s1.2</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s1.3</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s1.4</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s1.5</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s1.6</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s1.7</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s1.8</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s1.9</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s1.10</h3><p>Noch nicht verfügbar</p></div>
 
-        <!-- Row 2: s2.1 - s2.10 -->
-        <div class="download-card">
-          <h3>s2.1</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s2.2</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s2.3</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s2.4</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s2.5</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s2.6</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s2.7</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s2.8</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s2.9</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s2.10</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
+        <!-- Row 2 -->
+        <div class="download-card"><h3>s2.1</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s2.2</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s2.3</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s2.4</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s2.5</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s2.6</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s2.7</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s2.8</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s2.9</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s2.10</h3><p>Noch nicht verfügbar</p></div>
 
-        <!-- Row 3: s3.1 - s3.10 -->
-        <div class="download-card">
-          <h3>s3.1</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s3.2</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s3.3</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s3.4</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s3.5</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s3.6</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s3.7</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s3.8</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s3.9</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
-        <div class="download-card">
-          <h3>s3.10</h3>
-          <p>Noch nicht verfügbar</p>
-        </div>
+        <!-- Row 3 -->
+        <div class="download-card"><h3>s3.1</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s3.2</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s3.3</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s3.4</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s3.5</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s3.6</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s3.7</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s3.8</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s3.9</h3><p>Noch nicht verfügbar</p></div>
+        <div class="download-card"><h3>s3.10</h3><p>Noch nicht verfügbar</p></div>
       </div>
     </div>
   </section>
@@ -367,115 +295,90 @@
   <footer class="footer">
     <div class="container">
       <p>© 2025 praeparo. Alle Rechte vorbehalten.</p>
-      <p>
-        <a href="index.html#datenschutzImpressumBtn">Datenschutz &amp; Impressum</a>
-      </p>
+      <p><a href="index.html">Zurück zur Startseite</a></p>
     </div>
   </footer>
 
-  <!-- Scripts -->
   <script>
-    // Global variables for card password
-    let pendingDownloadUrl = '';
-    let pendingDownloadPassword = '';
+    let currentPdf = { name: '', url: '', password: '' };
 
     // Toggle password visibility
-    function togglePasswordVisibility(inputId, icon) {
+    function togglePassword(inputId) {
       const input = document.getElementById(inputId);
-      const isPassword = input.type === 'password';
-      input.type = isPassword ? 'text' : 'password';
+      const icon = event.currentTarget;
 
-      // Update icon
-      if (isPassword) {
+      if (input.type === 'password') {
+        input.type = 'text';
         icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
       } else {
+        input.type = 'password';
         icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
       }
     }
 
-    // Main password check
-    function checkPassword() {
-      const input = document.getElementById('passwordInput');
-      const overlay = document.getElementById('passwordOverlay');
-      const error = document.getElementById('passwordError');
+    // Check main password
+    function checkMainPassword() {
+      const input = document.getElementById('mainPassword');
+      const error = document.getElementById('mainError');
 
-      const correctPassword = 'praeparo2025';
-
-      if (input.value === correctPassword) {
-        overlay.classList.add('hidden');
-        sessionStorage.setItem('downloads_access', 'granted');
+      if (input.value === 'praeparo2025') {
+        document.getElementById('mainPasswordOverlay').classList.add('hidden');
+        sessionStorage.setItem('access', 'granted');
       } else {
         error.classList.add('show');
         input.value = '';
-        input.focus();
-        setTimeout(() => {
-          error.classList.remove('show');
-        }, 3000);
+        setTimeout(() => error.classList.remove('show'), 3000);
       }
     }
 
-    // Request PDF download (shows card password overlay)
-    function requestPdfDownload(cardName, pdfUrl, password) {
-      pendingDownloadUrl = pdfUrl;
-      pendingDownloadPassword = password;
-
-      document.getElementById('cardPasswordTitle').textContent = `Passwort für ${cardName}`;
-      document.getElementById('cardPasswordOverlay').classList.remove('hidden');
-      document.getElementById('cardPasswordInput').value = '';
-      document.getElementById('cardPasswordInput').focus();
+    // Request PDF download
+    function requestDownload(name, url, password) {
+      currentPdf = { name, url, password };
+      document.getElementById('pdfTitle').textContent = `Passwort für ${name}`;
+      document.getElementById('pdfPasswordOverlay').classList.remove('hidden');
+      document.getElementById('pdfPassword').value = '';
+      document.getElementById('pdfPassword').focus();
     }
 
-    // Check card password and download
-    function checkCardPassword() {
-      const input = document.getElementById('cardPasswordInput');
-      const error = document.getElementById('cardPasswordError');
+    // Check PDF password
+    function checkPdfPassword() {
+      const input = document.getElementById('pdfPassword');
+      const error = document.getElementById('pdfError');
 
-      if (input.value === pendingDownloadPassword) {
-        // Correct password - start download
-        error.classList.remove('show');
-        closeCardPasswordOverlay();
+      if (input.value === currentPdf.password) {
+        closePdfOverlay();
 
-        // Create temporary link and trigger download
+        // Start download
         const link = document.createElement('a');
-        link.href = pendingDownloadUrl;
-        link.download = pendingDownloadUrl.split('/').pop();
+        link.href = currentPdf.url;
+        link.download = currentPdf.url.split('/').pop();
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-
-        // Reset
-        pendingDownloadUrl = '';
-        pendingDownloadPassword = '';
       } else {
-        // Wrong password
         error.classList.add('show');
         input.value = '';
-        input.focus();
-        setTimeout(() => {
-          error.classList.remove('show');
-        }, 3000);
+        setTimeout(() => error.classList.remove('show'), 3000);
       }
     }
 
-    // Close card password overlay
-    function closeCardPasswordOverlay() {
-      document.getElementById('cardPasswordOverlay').classList.add('hidden');
-      document.getElementById('cardPasswordInput').value = '';
-      document.getElementById('cardPasswordError').classList.remove('show');
+    // Close PDF overlay
+    function closePdfOverlay() {
+      document.getElementById('pdfPasswordOverlay').classList.add('hidden');
+      document.getElementById('pdfError').classList.remove('show');
     }
 
     // Enter key support
-    document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') checkPassword();
+    document.getElementById('mainPassword').addEventListener('keypress', e => {
+      if (e.key === 'Enter') checkMainPassword();
+    });
+    document.getElementById('pdfPassword').addEventListener('keypress', e => {
+      if (e.key === 'Enter') checkPdfPassword();
     });
 
-    document.getElementById('cardPasswordInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') checkCardPassword();
-    });
-
-    // Check if user already entered password in this session
-    if (sessionStorage.getItem('downloads_access') === 'granted') {
-      document.getElementById('passwordOverlay').classList.add('hidden');
+    // Check session
+    if (sessionStorage.getItem('access') === 'granted') {
+      document.getElementById('mainPasswordOverlay').classList.add('hidden');
     }
   </script>
 
