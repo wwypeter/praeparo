@@ -329,7 +329,7 @@ body {
   border: 2px solid var(--color-secondary);
   font-weight: 600;
   height: var(--btn-height);
-  max-width: 350px;
+  max-width: 380px;
   width: 100%;
   text-align: center;
   font-size: 1.1rem;
@@ -338,6 +338,12 @@ body {
   justify-content: center;
   text-decoration: none;
   padding: 0 24px;
+}
+@media (max-width: 1024px) and (min-width: 769px) {
+  .beratung-btn {
+    font-size: 0.95rem;
+    padding: 0 16px;
+  }
 }
 @media (max-width: 900px) {
   .beratung-btn {
