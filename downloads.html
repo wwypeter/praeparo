@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
+    /* Password Overlay */
     #passwordOverlay {
       position: fixed;
       top: 0;
@@ -68,6 +69,7 @@
       display: block;
     }
 
+    /* Downloads Grid */
     .downloads-grid {
       display: grid;
       grid-template-columns: repeat(10, 1fr);
@@ -100,6 +102,7 @@
       margin: 0;
     }
 
+    /* Responsive */
     @media (max-width: 1400px) {
       .downloads-grid {
         grid-template-columns: repeat(5, 1fr);
@@ -126,6 +129,7 @@
 </head>
 <body>
 
+  <!-- Password Overlay -->
   <div id="passwordOverlay">
     <div class="password-box">
       <h2>Geschützter Bereich</h2>
@@ -136,6 +140,7 @@
     </div>
   </div>
 
+  <!-- NAVBAR -->
   <header class="navbar">
     <div class="container">
       <div class="logo-container">
@@ -157,12 +162,14 @@
     </div>
   </header>
 
-  <section id="downloads" class="section section-padding" style="background: var(--color-secondary); min-height: 80vh;">
+  <!-- DOWNLOADS SECTION -->
+  <section id="downloads" class="section section-padding visible" style="background: var(--color-secondary); min-height: 80vh;">
     <div class="container">
       <h2 style="text-align: center; margin-bottom: 20px;">Downloads - Erste Schriftliche Abschlussprüfung</h2>
       <p style="text-align: center; color: #666; margin-bottom: 40px;">Hier finden Sie alle verfügbaren Materialien zum Download</p>
 
       <div class="downloads-grid">
+        <!-- Row 1: s1.1 - s1.10 -->
         <div class="download-card" onclick="downloadPDF('test123', 'pdfs/test.pdf')">
           <h3>s1.1</h3>
           <p>PDF Download</p>
@@ -204,6 +211,7 @@
           <p>PDF Download</p>
         </div>
 
+        <!-- Row 2: s2.1 - s2.10 -->
         <div class="download-card">
           <h3>s2.1</h3>
           <p>PDF Download</p>
@@ -245,6 +253,7 @@
           <p>PDF Download</p>
         </div>
 
+        <!-- Row 3: s3.1 - s3.10 -->
         <div class="download-card">
           <h3>s3.1</h3>
           <p>PDF Download</p>
@@ -289,16 +298,19 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <p>© 2025 praeparo. Alle Rechte vorbehalten.</p>
       <p>
-        <a href="index.html">Zurück zur Startseite</a>
+        <a href="index.html#datenschutzImpressumBtn">Datenschutz &amp; Impressum</a>
       </p>
     </div>
   </footer>
 
+  <!-- Password Script -->
   <script>
+    // Password check function
     function checkPassword() {
       const input = document.getElementById('passwordInput');
       const overlay = document.getElementById('passwordOverlay');
@@ -318,6 +330,7 @@
       }
     }
 
+    // PDF Download function
     function downloadPDF(password, filepath) {
       const userPassword = prompt('Passwort für diese PDF:');
 
@@ -333,12 +346,14 @@
       }
     }
 
+    // Allow Enter key to submit
     document.getElementById('passwordInput').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
         checkPassword();
       }
     });
 
+    // Check if user already entered password in this session
     if (sessionStorage.getItem('downloads_access') === 'granted') {
       document.getElementById('passwordOverlay').classList.add('hidden');
     }
