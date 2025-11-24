@@ -8,140 +8,134 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Simple Password Box */
-    .password-screen {
+    #passwordOverlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.95);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
+      z-index: 10000;
     }
-    .password-screen.hidden {
+    #passwordOverlay.hidden {
       display: none;
     }
-    .pass-box {
-      background: white;
+    .password-box {
+      background: #fff;
       padding: 40px;
       border-radius: 12px;
-      max-width: 350px;
+      max-width: 400px;
       width: 90%;
-    }
-    .pass-box h2 {
-      margin: 0 0 20px 0;
       text-align: center;
     }
-    .pass-input-wrapper {
-      position: relative;
+    .password-box h2 {
       margin-bottom: 20px;
+      color: var(--color-dark);
     }
-    .pass-input-wrapper input {
-      width: 100%;
-      padding: 12px 40px 12px 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
-    .eye-toggle {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 18px;
-      user-select: none;
-    }
-    .pass-box button {
+    .password-box input {
       width: 100%;
       padding: 12px;
-      background: #8BC34A;
-      color: white;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+    .password-box button {
+      width: 100%;
+      padding: 12px;
+      background: var(--color-primary);
+      color: #fff;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
     }
-    .pass-box button:hover {
-      background: #7CB342;
+    .password-box button:hover {
+      opacity: 0.9;
     }
-    .error-text {
-      color: red;
-      font-size: 14px;
+    .password-error {
+      color: #e74c3c;
+      font-size: 0.9rem;
       margin-top: 10px;
-      text-align: center;
       display: none;
     }
+    .password-error.show {
+      display: block;
+    }
 
-    /* Downloads Grid */
-    .downloads-section {
-      max-width: 1600px;
-      margin: 60px auto;
-      padding: 20px;
-    }
-    .downloads-section h2 {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .cards-grid {
+    .downloads-grid {
       display: grid;
       grid-template-columns: repeat(10, 1fr);
       gap: 20px;
+      margin: 40px 0;
     }
-    .pdf-card {
-      background: white;
-      padding: 20px;
+    .download-card {
+      background: #fff;
       border-radius: 12px;
+      padding: 20px;
       text-align: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
       cursor: pointer;
-      transition: transform 0.2s;
+      border: 2px solid transparent;
     }
-    .pdf-card:hover {
+    .download-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      border: 2px solid var(--color-primary);
     }
-    .pdf-card h3 {
-      margin: 0 0 8px 0;
-      font-size: 18px;
+    .download-card h3 {
+      font-size: 1.2rem;
+      margin: 0 0 10px 0;
+      color: var(--color-dark);
     }
-    .pdf-card p {
-      margin: 0;
-      font-size: 14px;
+    .download-card p {
+      font-size: 0.9rem;
       color: #666;
+      margin: 0;
     }
+
     @media (max-width: 1400px) {
-      .cards-grid { grid-template-columns: repeat(5, 1fr); }
+      .downloads-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
     }
     @media (max-width: 900px) {
-      .cards-grid { grid-template-columns: repeat(3, 1fr); }
+      .downloads-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
     @media (max-width: 600px) {
-      .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+      .downloads-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+      .download-card {
+        padding: 15px;
+      }
+      .download-card h3 {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Password Screen -->
-  <div id="passScreen" class="password-screen">
-    <div class="pass-box">
-      <h2>Passwort erforderlich</h2>
-      <div class="pass-input-wrapper">
-        <input type="password" id="passInput" placeholder="Passwort eingeben">
-        <span class="eye-toggle" onclick="togglePass()">👁</span>
-      </div>
-      <button onclick="checkPass()">Weiter</button>
-      <div class="error-text" id="errorMsg">Falsches Passwort</div>
+  <div id="passwordOverlay">
+    <div class="password-box">
+      <h2>Geschützter Bereich</h2>
+      <p style="margin-bottom: 20px; color: #666;">Bitte geben Sie das Passwort ein:</p>
+      <input type="password" id="passwordInput" placeholder="Passwort">
+      <button onclick="checkPassword()">Zugang</button>
+      <div class="password-error" id="passwordError">Falsches Passwort</div>
     </div>
   </div>
 
-  <!-- Navbar -->
   <header class="navbar">
     <div class="container">
       <div class="logo-container">
@@ -163,108 +157,190 @@
     </div>
   </header>
 
-  <!-- Downloads Section -->
-  <section style="background: var(--color-secondary); min-height: 80vh; padding: 40px 0;">
-    <div class="downloads-section">
-      <h2>Downloads - Erste Schriftliche Abschlussprüfung</h2>
+  <section id="downloads" class="section section-padding" style="background: var(--color-secondary); min-height: 80vh;">
+    <div class="container">
+      <h2 style="text-align: center; margin-bottom: 20px;">Downloads - Erste Schriftliche Abschlussprüfung</h2>
+      <p style="text-align: center; color: #666; margin-bottom: 40px;">Hier finden Sie alle verfügbaren Materialien zum Download</p>
 
-      <div class="cards-grid">
-        <div class="pdf-card" onclick="downloadPdf('test123', 'pdfs/test.pdf')">
+      <div class="downloads-grid">
+        <div class="download-card" onclick="downloadPDF('test123', 'pdfs/test.pdf')">
           <h3>s1.1</h3>
-          <p>PDF verfügbar</p>
+          <p>PDF Download</p>
         </div>
-        <div class="pdf-card"><h3>s1.2</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s1.3</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s1.4</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s1.5</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s1.6</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s1.7</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s1.8</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s1.9</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s1.10</h3><p>Bald verfügbar</p></div>
+        <div class="download-card">
+          <h3>s1.2</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s1.3</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s1.4</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s1.5</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s1.6</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s1.7</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s1.8</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s1.9</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s1.10</h3>
+          <p>PDF Download</p>
+        </div>
 
-        <div class="pdf-card"><h3>s2.1</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s2.2</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s2.3</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s2.4</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s2.5</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s2.6</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s2.7</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s2.8</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s2.9</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s2.10</h3><p>Bald verfügbar</p></div>
+        <div class="download-card">
+          <h3>s2.1</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s2.2</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s2.3</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s2.4</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s2.5</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s2.6</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s2.7</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s2.8</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s2.9</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s2.10</h3>
+          <p>PDF Download</p>
+        </div>
 
-        <div class="pdf-card"><h3>s3.1</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s3.2</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s3.3</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s3.4</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s3.5</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s3.6</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s3.7</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s3.8</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s3.9</h3><p>Bald verfügbar</p></div>
-        <div class="pdf-card"><h3>s3.10</h3><p>Bald verfügbar</p></div>
+        <div class="download-card">
+          <h3>s3.1</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s3.2</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s3.3</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s3.4</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s3.5</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s3.6</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s3.7</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s3.8</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s3.9</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card">
+          <h3>s3.10</h3>
+          <p>PDF Download</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <p>© 2025 praeparo. Alle Rechte vorbehalten.</p>
-      <p><a href="index.html">Zurück zur Startseite</a></p>
+      <p>
+        <a href="index.html">Zurück zur Startseite</a>
+      </p>
     </div>
   </footer>
 
   <script>
-    // Toggle password visibility
-    function togglePass() {
-      const input = document.getElementById('passInput');
-      const toggle = document.querySelector('.eye-toggle');
-      if (input.type === 'password') {
-        input.type = 'text';
-        toggle.textContent = '🙈';
-      } else {
-        input.type = 'password';
-        toggle.textContent = '👁';
-      }
-    }
+    function checkPassword() {
+      const input = document.getElementById('passwordInput');
+      const overlay = document.getElementById('passwordOverlay');
+      const error = document.getElementById('passwordError');
 
-    // Check main password
-    function checkPass() {
-      const input = document.getElementById('passInput');
-      const error = document.getElementById('errorMsg');
-      if (input.value === 'praeparo2025') {
-        document.getElementById('passScreen').classList.add('hidden');
-        sessionStorage.setItem('pageAccess', 'ok');
+      const correctPassword = 'praeparo2025';
+
+      if (input.value === correctPassword) {
+        overlay.classList.add('hidden');
+        sessionStorage.setItem('downloads_access', 'granted');
       } else {
-        error.style.display = 'block';
+        error.classList.add('show');
         input.value = '';
-        setTimeout(() => error.style.display = 'none', 3000);
+        setTimeout(() => {
+          error.classList.remove('show');
+        }, 3000);
       }
     }
 
-    // Download PDF with password
-    function downloadPdf(password, file) {
-      const userPass = prompt('Passwort für diese PDF:');
-      if (userPass === password) {
+    function downloadPDF(password, filepath) {
+      const userPassword = prompt('Passwort für diese PDF:');
+
+      if (userPassword === password) {
         const link = document.createElement('a');
-        link.href = file;
-        link.download = file.split('/').pop();
+        link.href = filepath;
+        link.download = filepath.split('/').pop();
+        document.body.appendChild(link);
         link.click();
-      } else if (userPass !== null) {
+        document.body.removeChild(link);
+      } else if (userPassword !== null) {
         alert('Falsches Passwort');
       }
     }
 
-    // Enter key
-    document.getElementById('passInput').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') checkPass();
+    document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        checkPassword();
+      }
     });
 
-    // Check if already logged in
-    if (sessionStorage.getItem('pageAccess') === 'ok') {
-      document.getElementById('passScreen').classList.add('hidden');
+    if (sessionStorage.getItem('downloads_access') === 'granted') {
+      document.getElementById('passwordOverlay').classList.add('hidden');
     }
   </script>
 
