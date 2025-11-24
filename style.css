@@ -427,6 +427,13 @@ body {
   box-shadow: 0 1px 4px rgba(0,0,0,0.07);
   border-right: 1px solid #e0e0e0;
 }
+@media (max-width: 1200px) and (min-width: 601px) {
+  .split-card .split-field,
+  .split-field {
+    font-size: 0.85rem;
+    padding: 0 4px;
+  }
+}
 .split-card .split-field:last-child,
 .split-field:last-child {
   border-right: none;
