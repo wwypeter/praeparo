@@ -1462,7 +1462,7 @@ body {
     flex-direction: column;
     gap: 16px;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
   }
   #s1 .beratung-btn,
@@ -1471,10 +1471,10 @@ body {
   #m .beratung-btn,
   #p .beratung-btn {
     font-size: 1.1rem;
-    height: 52px;
-    width: 100%;
-    max-width: 100%;
-    padding: 0 16px;
+    height: 58px;
+    width: 85%;
+    max-width: 320px;
+    padding: 0 20px;
   }
 }
 @media (max-width: 600px) {
