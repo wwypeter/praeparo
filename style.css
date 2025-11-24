@@ -253,8 +253,6 @@ body {
   transform: translateY(0);
 }
 .s-block {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
   background: var(--color-secondary);
 }
 .s-block:last-of-type {
