@@ -387,7 +387,7 @@ section.s-block.section.visible {
   text-align: center;
 }
 .social-card .letter {
-  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-size: clamp(1rem, 2.5vw, 1.8rem);
   font-weight: 600;
   line-height: 1.1;
 }
