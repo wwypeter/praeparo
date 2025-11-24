@@ -380,24 +380,9 @@ body {
   text-align: center;
 }
 .social-card .letter {
-  font-size: 2rem;
+  font-size: clamp(1.2rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.1;
-}
-@media (max-width: 1000px) and (min-width: 925px) {
-  .social-card .letter {
-    font-size: 1.4rem;
-  }
-}
-@media (max-width: 924px) and (min-width: 769px) {
-  .social-card .letter {
-    font-size: 1.5rem;
-  }
-}
-@media (max-width: 768px) and (min-width: 601px) {
-  .social-card .letter {
-    font-size: 1.3rem;
-  }
 }
 .social-card .arrow {
   font-size: 1.5rem;
@@ -610,18 +595,13 @@ body {
   width: 100%;
   text-align: center;
   margin: 0;
-  font-size: 1.2rem;
+  font-size: clamp(1.05rem, 2.5vw, 1.2rem);
   font-weight: 600;
   transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), margin-top 0.4s cubic-bezier(0.4,0,0.2,1);
   position: relative;
   z-index: 2;
   will-change: transform;
   margin-top: 40px;
-}
-@media (max-width: 620px) and (min-width: 601px) {
-  .appointment-card h3 {
-    font-size: 1.05rem;
-  }
 }
 .appointment-card.open h3 {
   transform: translateY(-20px);
