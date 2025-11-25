@@ -7,6 +7,7 @@
   <link rel="icon" href="img/logo2.png" type="image/png">
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
   <style>
     /* Password Overlay */
     #passwordOverlay {
@@ -69,12 +70,16 @@
       display: block;
     }
 
-    /* Downloads Section */
+    /* Download Sections */
     .download-section {
       padding: 60px 20px;
       background: var(--color-secondary);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
     }
-    .download-section-container {
+    .download-section:first-of-type {
+      border-top: none;
+    }
+    .download-section .container {
       max-width: 1400px;
       margin: 0 auto;
     }
@@ -82,6 +87,7 @@
       text-align: center;
       margin-bottom: 40px;
       font-size: 2rem;
+      color: var(--color-dark);
     }
 
     /* Downloads Grid */
@@ -89,7 +95,6 @@
       display: grid;
       grid-template-columns: repeat(10, 1fr);
       gap: 20px;
-      margin: 0 auto;
       max-width: 100%;
     }
     .download-card {
@@ -140,19 +145,9 @@
       .download-card h3 {
         font-size: 1rem;
       }
-    }
-
-    /* Fixed Footer */
-    .simple-footer {
-      background: var(--color-dark);
-      color: #fff;
-      padding: 30px 20px;
-      text-align: center;
-      margin-top: 60px;
-    }
-    .simple-footer p {
-      margin: 8px 0;
-      font-size: 0.9rem;
+      .download-section {
+        padding: 40px 15px;
+      }
     }
   </style>
 </head>
@@ -192,76 +187,167 @@
   </header>
 
   <!-- SECTION 1 -->
-  <section class="download-section">
-    <div class="download-section-container">
+  <section class="download-section section section-padding">
+    <div class="container">
       <h2>Lösungen der ersten schriftlichen Prüfung</h2>
       <div class="downloads-grid">
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s1.1</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s1.2</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s1.3</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s1.4</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s1.5</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s1.6</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s1.7</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s1.8</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s1.9</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s1.10</h3><p>PDF Download</p></div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s1.1</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s1.2</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s1.3</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s1.4</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s1.5</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s1.6</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s1.7</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s1.8</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s1.9</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s1.10</h3>
+          <p>PDF Download</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- SECTION 2 -->
-  <section class="download-section">
-    <div class="download-section-container">
+  <section class="download-section section section-padding">
+    <div class="container">
       <h2>Lösungen der zweiten schriftlichen Prüfung</h2>
       <div class="downloads-grid">
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s2.1</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s2.2</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s2.3</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s2.4</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s2.5</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s2.6</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s2.7</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s2.8</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s2.9</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s2.10</h3><p>PDF Download</p></div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s2.1</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s2.2</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s2.3</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s2.4</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s2.5</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s2.6</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s2.7</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s2.8</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s2.9</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s2.10</h3>
+          <p>PDF Download</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- SECTION 3 -->
-  <section class="download-section">
-    <div class="download-section-container">
+  <section class="download-section section section-padding">
+    <div class="container">
       <h2>Lösungen der dritten schriftlichen Prüfung</h2>
       <div class="downloads-grid">
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s3.1</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s3.2</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s3.3</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s3.4</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s3.5</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s3.6</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s3.7</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s3.8</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s3.9</h3><p>PDF Download</p></div>
-        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')"><h3>s3.10</h3><p>PDF Download</p></div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s3.1</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s3.2</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s3.3</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s3.4</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s3.5</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s3.6</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s3.7</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s3.8</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s3.9</h3>
+          <p>PDF Download</p>
+        </div>
+        <div class="download-card" onclick="downloadPDF('test', 'pdfs/test.pdf')">
+          <h3>s3.10</h3>
+          <p>PDF Download</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="simple-footer">
-    <p>© 2025 praeparo. Alle Rechte vorbehalten.</p>
-    <p>Weiterverbreitung der Materialien ist untersagt und führt zu rechtlichen Konsequenzen.</p>
+  <footer class="footer">
+    <div class="container">
+      <p style="margin: 0 0 10px 0;">© 2025 praeparo. Alle Rechte vorbehalten.</p>
+      <p style="margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.8);">Weiterverbreitung der Materialien ist untersagt und führt zu rechtlichen Konsequenzen.</p>
+    </div>
   </footer>
 
-  <!-- Password Script -->
+  <!-- Password & Download Script -->
   <script>
     // Password check function
     function checkPassword() {
       const input = document.getElementById('passwordInput');
       const overlay = document.getElementById('passwordOverlay');
       const error = document.getElementById('passwordError');
-
       const correctPassword = 'login';
 
       if (input.value === correctPassword) {
@@ -279,7 +365,6 @@
     // PDF Download function
     function downloadPDF(password, filepath) {
       const userPassword = prompt('Passwort für diese PDF:');
-
       if (userPassword === password) {
         const link = document.createElement('a');
         link.href = filepath;
