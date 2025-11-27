@@ -1,0 +1,231 @@
+╔═══════════════════════════════════════════════════════════════╗
+║          PRAEPARO DOWNLOAD-SEITE - SUPER-EINFACH-ANLEITUNG          ║
+╚═══════════════════════════════════════════════════════════════╝
+
+📁 WO SIND DIE DATEIEN?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Alle Dateien sind in deinem praeparo-Ordner (dort wo auch index.html liegt)
+
+Wichtigste Dateien:
+✓ downloads.html       → Deine neue Download-Seite
+✓ config.php          → Hier stehen die Passwörter (verschlüsselt)
+✓ api_login.php       → Prüft das Login-Passwort
+✓ api_download.php    → Prüft das PDF-Passwort
+✓ .htaccess           → Schützt deine Dateien
+
+
+🚀 INSTALLATION (Schritt für Schritt)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SCHRITT 1: Dateien auf deinen Webserver hochladen
+───────────────────────────────────────────────
+Mit deinem FTP-Programm (z.B. FileZilla):
+
+1. Verbinde dich mit deinem Webserver
+2. Gehe in deinen praeparo-Ordner
+3. Lade diese Dateien hoch:
+   - downloads.html
+   - config.php
+   - api_login.php
+   - api_download.php
+   - .htaccess
+
+ACHTUNG: .htaccess beginnt mit einem Punkt!
+
+
+SCHRITT 2: PDF-Ordner erstellen
+───────────────────────────────
+1. Erstelle einen Ordner namens "pdfs" (ohne Anführungszeichen)
+2. Lade deine PDF-Dateien in diesen Ordner
+
+So sollte es aussehen:
+praeparo/
+  ├── downloads.html
+  ├── config.php
+  ├── pdfs/
+  │   ├── test.pdf
+  │   └── weitere_pdfs.pdf
+
+
+SCHRITT 3: Testen!
+──────────────────
+1. Öffne im Browser: https://deine-website.de/downloads.html
+2. Gib Passwort ein: login
+3. Klicke auf eine PDF
+4. Gib Passwort ein: test
+5. PDF sollte heruntergeladen werden
+
+
+🔑 PASSWÖRTER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+AKTUELL EINGESTELLT:
+────────────────────
+Login-Passwort:      login
+PDF-Passwort:        test
+
+
+PASSWÖRTER ÄNDERN - METHODE 1 (Online, am einfachsten):
+────────────────────────────────────────────────────────
+
+1. Gehe zu: https://bcrypt-generator.com/
+
+2. Gib dein neues Passwort ein (z.B. "MeinGeheimesPasswort123")
+
+3. Drücke auf "Generate Hash"
+
+4. Kopiere den langen Text (beginnt mit $2y$...)
+   Beispiel: $2y$10$abcd1234efgh5678ijklmnopqrstuvwxyz...
+
+5. Öffne config.php mit einem Texteditor
+
+6. Zum Ändern des LOGIN-PASSWORTS:
+   Suche nach dieser Zeile:
+   define('MAIN_PASSWORD_HASH', '$2y$10$YQ3vy...');
+
+   Ersetze alles zwischen den ' ' mit deinem neuen Hash:
+   define('MAIN_PASSWORD_HASH', '$2y$10$deinNeuerHash');
+
+7. Zum Ändern der PDF-PASSWÖRTER:
+   Suche nach:
+   's1.1' => '$2y$10$8F0oYqK...',
+
+   Ersetze den Hash nach => mit deinem neuen Hash:
+   's1.1' => '$2y$10$deinNeuerHash',
+
+8. Speichern und auf Server hochladen
+
+9. FERTIG!
+
+
+PASSWÖRTER ÄNDERN - METHODE 2 (Kommandozeile):
+───────────────────────────────────────────────
+
+Wenn du dich mit der Kommandozeile auskennst:
+
+1. Öffne Terminal/CMD
+2. Gehe in deinen praeparo-Ordner
+3. Führe aus: php generate_password_hash.php "deinPasswort"
+4. Kopiere den Hash und füge ihn in config.php ein
+
+
+📝 VERSCHIEDENE PASSWÖRTER FÜR VERSCHIEDENE PDFs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Beispiel: Du willst für die erste Prüfung ein anderes Passwort als für die zweite:
+
+In config.php:
+
+$pdfPasswords = [
+    // Erste Prüfung - Passwort: "pruefung1"
+    's1.1' => '$2y$10$hash_fuer_pruefung1...',
+    's1.2' => '$2y$10$hash_fuer_pruefung1...',
+
+    // Zweite Prüfung - Passwort: "pruefung2"
+    's2.1' => '$2y$10$hash_fuer_pruefung2...',
+    's2.2' => '$2y$10$hash_fuer_pruefung2...',
+];
+
+Du generierst einfach für "pruefung1" einen Hash und für "pruefung2" einen anderen Hash!
+
+
+🆕 NEUE PDFs HINZUFÜGEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SCHRITT 1: PDF hochladen
+─────────────────────────
+Lade deine neue PDF in den pdfs/ Ordner
+Beispiel: pdfs/neue_pruefung.pdf
+
+
+SCHRITT 2: In config.php eintragen
+───────────────────────────────────
+Öffne config.php und suche nach $pdfPasswords und $pdfFiles
+
+Füge hinzu:
+
+In $pdfPasswords:
+'s1.11' => '$2y$10$deinHash',
+
+In $pdfFiles:
+'s1.11' => 'pdfs/neue_pruefung.pdf',
+
+
+SCHRITT 3: Button in downloads.html hinzufügen
+───────────────────────────────────────────────
+Öffne downloads.html und suche nach einer Stelle wie:
+
+<div class="download-card" onclick="openPdfModal('s1.10')">
+  <h3>s1.10</h3>
+  <p>PDF Download</p>
+</div>
+
+Kopiere das und füge darunter ein:
+
+<div class="download-card" onclick="openPdfModal('s1.11')">
+  <h3>s1.11</h3>
+  <p>PDF Download</p>
+</div>
+
+Speichern und hochladen - FERTIG!
+
+
+🛡️ SICHERHEIT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ Passwörter sind NICHT mehr im Quellcode sichtbar
+✓ Alle Passwörter sind verschlüsselt (bcrypt)
+✓ Schutz vor Passwort-Raterei (max. 5 Versuche beim Login)
+✓ PDFs können nicht direkt heruntergeladen werden
+✓ config.php kann nicht im Browser aufgerufen werden
+
+
+❗ WICHTIG NACH DER INSTALLATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Ändere die Passwörter! "login" und "test" sind zu einfach!
+
+2. Lösche diese Datei vom Server:
+   generate_password_hash.php
+   (Nur lokal behalten für spätere Passwortänderungen)
+
+3. Teste alles gründlich!
+
+
+🆘 PROBLEME?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problem: "Seite lädt, aber kein Login erscheint"
+Lösung: Prüfe, ob du script.js und style.css hochgeladen hast
+
+Problem: "Falsches Passwort", obwohl es richtig ist
+Lösung: Prüfe, ob du den Hash richtig kopiert hast (mit $2y$ am Anfang)
+
+Problem: "PDF wird nicht heruntergeladen"
+Lösung: Prüfe, ob die PDF im pdfs/ Ordner liegt und der Pfad in config.php stimmt
+
+Problem: "403 Forbidden" beim Aufrufen
+Lösung: Dein Server unterstützt evtl. keine .htaccess Dateien
+        → Kontaktiere deinen Hoster
+
+Problem: "Zu viele Anmeldeversuche"
+Lösung: 15 Minuten warten oder die Session auf dem Server löschen
+
+
+📞 NOCH FRAGEN?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Die Datei SICHERHEITS_ANLEITUNG.md hat noch mehr Details!
+
+
+═══════════════════════════════════════════════════════════════
+
+WICHTIGSTE REGEL:
+
+1. Dateien auf Server hochladen
+2. Browser öffnen → downloads.html
+3. Login: "login" eingeben
+4. PDF klicken → "test" eingeben
+5. DANACH Passwörter ändern!
+
+═══════════════════════════════════════════════════════════════
