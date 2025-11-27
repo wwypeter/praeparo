@@ -1,0 +1,22 @@
+# Schutz der Konfigurationsdatei vor direktem Zugriff
+<Files "config.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Blockiere direkten Zugriff auf PDF-Dateien (nur über api_download.php erlaubt)
+<FilesMatch "\.(pdf)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Erlaube Zugriff auf API-Endpunkte
+<Files "api_login.php">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files "api_download.php">
+    Order Allow,Deny
+    Allow from all
+</Files>
