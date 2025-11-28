@@ -10,6 +10,9 @@
 <script defer src="script.js"></script>
 
 <style>
+/* Verhindere Scrolling wenn Overlay aktiv ist */
+body.locked { overflow: hidden; height: 100vh; }
+
 #passwordOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.91); display: flex; align-items: center; justify-content: center; z-index: 10000; }
 #passwordOverlay.hidden { display: none; }
 .password-box { background: #fff; padding: 40px; border-radius: 12px; max-width: 420px; width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
@@ -26,6 +29,12 @@
 .password-error.show { display: block; }
 .password-warning { color: #e67e22; font-size: .85rem; margin-top: 8px; display: none; }
 .password-warning.show { display: block; }
+.promo-box { margin-top: 25px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: #fff; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+.promo-box h3 { margin: 0 0 10px 0; font-size: 1.1rem; }
+.promo-box p { margin: 5px 0; font-size: 0.95rem; line-height: 1.5; }
+.promo-links { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+.promo-links a { flex: 1; min-width: 80px; padding: 8px 12px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; color: #fff; text-decoration: none; text-align: center; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
+.promo-links a:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
 .download-section {
   padding: 40px 20px;
   background: var(--color-secondary);
@@ -93,6 +102,19 @@
 <button id="loginBtn" onclick="checkPassword()">Login</button>
 <div class="password-error" id="passwordError">Falsches Passwort</div>
 <div class="password-warning" id="passwordWarning"></div>
+<!-- Werbe-Box (nur sichtbar wenn von index.html) -->
+<div class="promo-box" id="promoBox" style="display: none;">
+<div class="promo-content">
+<h3>🎓 Zugang zu allen Lösungen</h3>
+<p>Sichere dir jetzt den Zugang zu allen Prüfungslösungen und maximiere deinen Lernerfolg!</p>
+<p style="font-size: 0.9rem; margin-top: 10px; color: #666;">Kontaktiere uns für mehr Informationen:</p>
+<div class="promo-links">
+<a href="https://wa.me/4917676069804" target="_blank">WhatsApp</a>
+<a href="https://www.t.me/praeparo" target="_blank">Telegram</a>
+<a href="mailto:praeparo@outlook.com">E-Mail</a>
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -127,7 +149,7 @@
 </div>
 </header>
 
-<section class="download-section">
+<section class="download-section" id="downloads-s1">
 <div class="container">
 <h2>Download: Lösungen der ersten schriftlichen Prüfung</h2>
 <div class="downloads-grid">
@@ -145,7 +167,7 @@
 </div>
 </section>
 
-<section class="download-section">
+<section class="download-section" id="downloads-s2">
 <div class="container">
 <h2>Download: Lösungen der zweiten schriftlichen Prüfung</h2>
 <div class="downloads-grid">
@@ -163,7 +185,7 @@
 </div>
 </section>
 
-<section class="download-section">
+<section class="download-section" id="downloads-s3">
 <div class="container">
 <h2>Download: Lösungen der dritten schriftlichen Prüfung</h2>
 <div class="downloads-grid">
@@ -225,6 +247,7 @@ async function checkPassword() {
     if (response.ok && data.success) {
       // Login erfolgreich
       overlay.classList.add('hidden');
+      document.body.classList.remove('locked'); // Scrolling wieder erlauben
       sessionStorage.setItem('downloads_access', 'granted');
     } else {
       // Login fehlgeschlagen
@@ -398,6 +421,15 @@ document.getElementById('pdfPasswordInput').addEventListener('keypress', e => {
 // Prüfen, ob bereits eingeloggt
 if (sessionStorage.getItem('downloads_access') === 'granted') {
   document.getElementById('passwordOverlay').classList.add('hidden');
+  document.body.classList.remove('locked');
+} else {
+  // Scrolling blockieren wenn Overlay aktiv
+  document.body.classList.add('locked');
+}
+
+// Werbe-Box anzeigen wenn von index.html kommend
+if (document.referrer && document.referrer.includes('index.html')) {
+  document.getElementById('promoBox').style.display = 'block';
 }
 
 // Modal schließen bei Klick außerhalb
