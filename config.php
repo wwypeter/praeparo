@@ -5,12 +5,6 @@ if (!defined('ACCESS_ALLOWED')) {
     die('Zugriff verweigert');
 }
 
-// Session-Konfiguration
-ini_set('session.cookie_httponly', 1);
-ini_set('session.use_only_cookies', 1);
-ini_set('session.cookie_secure', 0); // Auf 1 setzen bei HTTPS
-ini_set('session.cookie_samesite', 'Strict');
-
 // Hauptpasswort für den Zugang zur Seite (gehashed mit password_hash)
 // Aktuelles Passwort: "login"
 // Um das Passwort zu ändern, führe aus: echo password_hash('deinPasswort', PASSWORD_DEFAULT);
