@@ -1,10 +1,4 @@
 <?php
-// Session-Konfiguration VOR session_start()
-ini_set('session.cookie_httponly', 1);
-ini_set('session.use_only_cookies', 1);
-ini_set('session.cookie_secure', 0); // Auf 1 setzen bei HTTPS
-ini_set('session.cookie_samesite', 'Strict');
-
 // Session starten
 session_start();
 
@@ -15,81 +9,32 @@ require_once 'config.php';
 // Header für JSON-Antwort
 header('Content-Type: application/json');
 
-// Rate-Limiting prüfen
-$ip = $_SERVER['REMOTE_ADDR'];
-$sessionKey = 'login_attempts_' . md5($ip);
-$timeKey = 'login_first_attempt_' . md5($ip);
-
-// Alte Versuche zurücksetzen, wenn Timeout abgelaufen
-if (isset($_SESSION[$timeKey]) && (time() - $_SESSION[$timeKey]) > LOGIN_TIMEOUT) {
-    unset($_SESSION[$sessionKey]);
-    unset($_SESSION[$timeKey]);
-}
-
-// Prüfen, ob zu viele Versuche
-if (isset($_SESSION[$sessionKey]) && $_SESSION[$sessionKey] >= MAX_LOGIN_ATTEMPTS) {
-    $remainingTime = LOGIN_TIMEOUT - (time() - $_SESSION[$timeKey]);
-    http_response_code(429);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Zu viele Anmeldeversuche. Bitte warten Sie ' . ceil($remainingTime / 60) . ' Minuten.',
-        'remaining_time' => $remainingTime
-    ]);
-    exit;
-}
-
-// POST-Daten validieren
+// POST-Daten prüfen
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Nur POST-Anfragen erlaubt'
-    ]);
+    echo json_encode(['success' => false, 'message' => 'Nur POST erlaubt']);
     exit;
 }
 
 // JSON-Input lesen
 $input = json_decode(file_get_contents('php://input'), true);
+$password = trim($input['password'] ?? '');
 
-if (!isset($input['password']) || empty(trim($input['password']))) {
-    http_response_code(400);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Passwort erforderlich'
-    ]);
-    exit;
-}
-
-$password = trim($input['password']);
-
-// Passwort prüfen
-if (password_verify($password, MAIN_PASSWORD_HASH)) {
-    // Erfolgreicher Login
+// Passwort prüfen (EINFACH!)
+if ($password === LOGIN_PASSWORD) {
+    // Login erfolgreich
     $_SESSION['authenticated'] = true;
     $_SESSION['auth_time'] = time();
-
-    // Login-Versuche zurücksetzen
-    unset($_SESSION[$sessionKey]);
-    unset($_SESSION[$timeKey]);
 
     echo json_encode([
         'success' => true,
         'message' => 'Login erfolgreich'
     ]);
 } else {
-    // Fehlgeschlagener Login
-    if (!isset($_SESSION[$sessionKey])) {
-        $_SESSION[$sessionKey] = 0;
-        $_SESSION[$timeKey] = time();
-    }
-    $_SESSION[$sessionKey]++;
-
-    $remainingAttempts = MAX_LOGIN_ATTEMPTS - $_SESSION[$sessionKey];
-
+    // Falsches Passwort
     http_response_code(401);
     echo json_encode([
         'success' => false,
-        'message' => 'Falsches Passwort',
-        'remaining_attempts' => max(0, $remainingAttempts)
+        'message' => 'Falsches Passwort'
     ]);
 }
