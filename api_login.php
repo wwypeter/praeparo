@@ -1,4 +1,10 @@
 <?php
+// Session-Konfiguration VOR session_start()
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_only_cookies', 1);
+ini_set('session.cookie_secure', 0); // Auf 1 setzen bei HTTPS
+ini_set('session.cookie_samesite', 'Strict');
+
 // Session starten
 session_start();
 
