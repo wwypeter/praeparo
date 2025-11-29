@@ -189,7 +189,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // PREISE-LINK IN FAQ: PREISE-KARTE MIT TIMER ÖFFNEN
   // =========================================================
   document.querySelectorAll('.preise-link[data-preise-feld]').forEach(link => {
-    link.addEventListener('click', function () {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      const preiseSection = document.getElementById('preise');
+      if (preiseSection) smoothScrollTo(preiseSection);
+
       setTimeout(() => {
         const feldNummer = link.getAttribute('data-preise-feld');
         closeAllCards(preiseCards);
@@ -383,14 +387,7 @@ if (splitCard) {
     heroCtaBtn.addEventListener('click', function (e) {
       e.preventDefault();
       const target = document.getElementById('faq');
-      if (target) {
-        const offset = (window.innerWidth <= 600) ? 0 : 200;
-        const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
-        window.scrollTo({
-          top: elementPosition - offset,
-          behavior: "smooth"
-        });
-      }
+      if (target) smoothScrollTo(target);
     });
   }
 
