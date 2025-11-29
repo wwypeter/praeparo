@@ -1127,6 +1127,11 @@ align-items: flex-start !important;
 width: 100%;
 }
 
+.s-block .content h2,
+.s-block.reverse .content h2 {
+text-align: center !important;
+}
+
 .s-block .beratung-actions,
 .s-block.reverse .beratung-actions {
 order: 2;
