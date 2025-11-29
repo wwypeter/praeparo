@@ -4,6 +4,29 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // =========================================================
+  // SCROLL-HELPER MIT INDIVIDUELLEN OFFSETS
+  // =========================================================
+  const scrollOffsets = {
+    'kontakt': 100,              // Einzelberatung
+    'sprechstundentermine': 150, // Sprechstunde
+    'preise': 100,               // Preise
+    'faq': 100                   // FAQ
+  };
+
+  function smoothScrollTo(element) {
+    if (!element) return;
+    const elementId = element.id;
+    const offset = scrollOffsets[elementId] || 0;
+    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+    const offsetPosition = elementPosition - offset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  }
+
+  // =========================================================
   // NAVIGATION: MOBILE TOGGLE
   // =========================================================
   const navToggle = document.querySelector('.nav-toggle');
@@ -128,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
   btn.addEventListener('click', function (e) {
     e.preventDefault();
     const section = document.getElementById('sprechstundentermine');
-    if (section) section.scrollIntoView({ behavior: "smooth" });
+    if (section) smoothScrollTo(section);
 
     // Termin-Karte schließen
     closeAllCards(appointmentCards);
@@ -331,21 +354,9 @@ if (splitCard) {
   btn.addEventListener('click', function (e) {
     e.preventDefault();
 
-    // sanft zum Kontakt-Bereich scrollen (oberhalb mit kleinem Versatz)
+    // sanft zum Kontakt-Bereich scrollen
     const target = document.getElementById('kontakt');
-    if (target) {
-      if (window.innerWidth > 600) {
-        // Desktop: fester Scrollpunkt – hier den Wert nach Wunsch anpassen
-        const scrollPosition = 4350; // <— Pixel-Wert frei definieren
-        window.scrollTo({
-          top: scrollPosition,
-          behavior: 'smooth'
-        });
-      } else {
-        // Mobile: Standard-Scroll wie bisher
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
+    if (target) smoothScrollTo(target);
 
     // Preiskarte Einzeltermin öffnen und nach 2 Sekunden wieder schließen
     closeAllCards(preiseCards);
