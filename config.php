@@ -10,21 +10,21 @@ if (!defined('ACCESS_ALLOWED')) {
 // ═══════════════════════════════════════════════════════════════
 
 // Login-Passwort für die Seite
-define('LOGIN_PASSWORD', 'Pflege2025_dloads2');
+define('LOGIN_PASSWORD', 'login');
 
 // PDF-Passwörter (kannst du frei ändern!)
 $pdfPasswords = [
     // Erste schriftliche Prüfung - Passwort: Pruefung1_2025
-    's1.1' => 'Pruefung1_2025',
-    's1.2' => 'Pruefung1_2025',
-    's1.3' => 'Pruefung1_2025',
-    's1.4' => 'Pruefung1_2025',
-    's1.5' => 'Pruefung1_2025',
-    's1.6' => 'Pruefung1_2025',
-    's1.7' => 'Pruefung1_2025',
-    's1.8' => 'Pruefung1_2025',
-    's1.9' => 'Pruefung1_2025',
-    's1.10' => 'Pruefung1_2025',
+    's1.1' => 'test1',
+    's1.2' => 'test2',
+    's1.3' => 'test3',
+    's1.4' => 'test4',
+    's1.5' => 'test5',
+    's1.6' => 'test6',
+    's1.7' => 'test7',
+    's1.8' => 'test8',
+    's1.9' => 'test9',
+    's1.10' => 'test10',
 
     // Zweite schriftliche Prüfung - Passwort: Pruefung2_2025
     's2.1' => 'Pruefung2_2025',
