@@ -126,7 +126,7 @@
 </div>
 </header>
 
-<section class="download-section">
+<section id="s1-downloads" class="download-section">
 <div class="container">
 <h2>Download: Lösungen der ersten schriftlichen Prüfung</h2>
 <div class="downloads-grid">
@@ -144,7 +144,7 @@
 </div>
 </section>
 
-<section class="download-section">
+<section id="s2-downloads" class="download-section">
 <div class="container">
 <h2>Download: Lösungen der zweiten schriftlichen Prüfung</h2>
 <div class="downloads-grid">
@@ -162,7 +162,7 @@
 </div>
 </section>
 
-<section class="download-section">
+<section id="s3-downloads" class="download-section">
 <div class="container">
 <h2>Download: Lösungen der dritten schriftlichen Prüfung</h2>
 <div class="downloads-grid">
@@ -417,6 +417,16 @@ if (sessionStorage.getItem('downloads_access') === 'granted') {
 document.getElementById('pdfPasswordModal').addEventListener('click', e => {
   if (e.target.id === 'pdfPasswordModal') {
     closePdfModal();
+  }
+});
+
+// Auto-Scroll zur Sektion wenn Hash vorhanden
+window.addEventListener('load', () => {
+  if (window.location.hash && sessionStorage.getItem('downloads_access') === 'granted') {
+    setTimeout(() => {
+      const el = document.querySelector(window.location.hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 200);
   }
 });
 </script>
