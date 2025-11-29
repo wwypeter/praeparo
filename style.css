@@ -1584,12 +1584,42 @@ box-sizing: border-box !important;
 #kontakt {
 scroll-margin-top: 200px;
 }
-/* Pseudo‑Element sorgt für 50px Versatz beim Scrollen */
+/* Scroll-Tiefen für verschiedene Sektionen (nur Desktop) */
+/* Passe die height und margin-top Werte an (müssen identisch sein, nur mit umgekehrtem Vorzeichen) */
+
+/* Einzelberatung Button -> scrollt zu #kontakt */
 #kontakt::before {
 content: '';
 display: block;
-height: 50px;      /* gewünschte Scroll‑Tiefe */
-margin-top: -50px; /* zieht das Element nach oben */
+height: 50px;      /* <- Scroll-Tiefe anpassen */
+margin-top: -50px; /* <- gleicher Wert mit - */
+visibility: hidden;
+}
+
+/* Sprechstunde Button -> scrollt zu #sprechstundentermine */
+#sprechstundentermine::before {
+content: '';
+display: block;
+height: 50px;      /* <- Scroll-Tiefe anpassen */
+margin-top: -50px; /* <- gleicher Wert mit - */
+visibility: hidden;
+}
+
+/* Preise Link (im FAQ) -> scrollt zu #preise */
+#preise::before {
+content: '';
+display: block;
+height: 50px;      /* <- Scroll-Tiefe anpassen */
+margin-top: -50px; /* <- gleicher Wert mit - */
+visibility: hidden;
+}
+
+/* FAQ Button (von oben) -> scrollt zu #faq */
+#faq::before {
+content: '';
+display: block;
+height: 50px;      /* <- Scroll-Tiefe anpassen */
+margin-top: -50px; /* <- gleicher Wert mit - */
 visibility: hidden;
 }
 
