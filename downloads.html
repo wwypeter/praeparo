@@ -58,6 +58,9 @@ body {
   display: flex;
   flex-direction: column;
 }
+body.no-scroll {
+  overflow: hidden;
+}
 .download-section {
   flex: 1;
 }
@@ -244,6 +247,7 @@ async function checkPassword() {
     if (response.ok && data.success) {
       // Login erfolgreich
       overlay.classList.add('hidden');
+      document.body.classList.remove('no-scroll');
       sessionStorage.setItem('downloads_access', 'granted');
     } else {
       // Login fehlgeschlagen
@@ -418,6 +422,9 @@ document.getElementById('pdfPasswordInput').addEventListener('keypress', e => {
 // Prüfen, ob bereits eingeloggt
 if (sessionStorage.getItem('downloads_access') === 'granted') {
   document.getElementById('passwordOverlay').classList.add('hidden');
+  document.body.classList.remove('no-scroll');
+} else {
+  document.body.classList.add('no-scroll');
 }
 
 // Modal schließen bei Klick außerhalb
