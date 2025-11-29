@@ -7,16 +7,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // SCROLL-HELPER MIT INDIVIDUELLEN OFFSETS
   // =========================================================
   const scrollOffsets = {
-    'kontakt': 100,              // Einzelberatung
-    'sprechstundentermine': 150, // Sprechstunde
-    'preise': 100,               // Preise
-    'faq': 100                   // FAQ
+    'kontakt': 100,              // Einzelberatung DESKTOP - HIER ANPASSEN
+    'sprechstundentermine': 150, // Sprechstunde DESKTOP - HIER ANPASSEN
+    'preise': 100,               // Preise DESKTOP - HIER ANPASSEN
+    'faq': 100                   // FAQ DESKTOP - HIER ANPASSEN
+  };
+
+  const scrollOffsetsMobile = {
+    'kontakt': 50,               // Einzelberatung MOBILE - HIER ANPASSEN
+    'sprechstundentermine': 100, // Sprechstunde MOBILE - HIER ANPASSEN
+    'preise': 80,                // Preise MOBILE - HIER ANPASSEN
+    'faq': 80                    // FAQ MOBILE - HIER ANPASSEN
   };
 
   function smoothScrollTo(element) {
     if (!element) return;
     const elementId = element.id;
-    const offset = scrollOffsets[elementId] || 0;
+    const isMobile = window.innerWidth <= 768;
+    const offsets = isMobile ? scrollOffsetsMobile : scrollOffsets;
+    const offset = offsets[elementId] || 0;
     const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
     const offsetPosition = elementPosition - offset;
 
