@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Downloads - praeparo Prüfungsvorbereitung</title>
+<link rel="icon" href="img/logo2.png" type="image/png">
+<link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
+
+<style>
+#passwordOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.91); display: flex; align-items: center; justify-content: center; z-index: 10000; }
+#passwordOverlay.hidden { display: none; }
+.password-box { background: #fff; padding: 40px; border-radius: 12px; max-width: 420px; width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+.password-box h2 { margin-bottom: 15px; color: var(--color-dark); }
+.password-box .subtext { margin-bottom: 25px; font-size: .95rem; color: #555; line-height: 1.5; }
+.password-field { position: relative; width: 100%; }
+.password-field input { width: 100%; padding: 12px 44px 12px 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
+.password-toggle { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); cursor: pointer; width: 24px; height: 24px; opacity: .65; }
+.password-toggle:hover { opacity: 1; }
+.password-box button { width: 100%; padding: 12px; background: var(--color-primary); color: #fff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 15px; }
+.password-box button:hover { opacity: .9; }
+.password-box button:disabled { opacity: 0.5; cursor: not-allowed; }
+.password-error { color: #e74c3c; font-size: .9rem; margin-top: 12px; display: none; }
+.password-error.show { display: block; }
+.password-warning { color: #e67e22; font-size: .85rem; margin-top: 8px; display: none; }
+.password-warning.show { display: block; }
+.download-section {
+  padding: 40px 20px;
+  background: var(--color-secondary);
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+.download-section .container { max-width: 1400px; margin: 0 auto; }
+.download-section h2 { text-align: center; margin-bottom: 40px; font-size: 2rem; color: var(--color-dark); }
+.downloads-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.download-card {
+  flex: 0 0 calc(20% - 20px);
+}
+.download-card { background: #fff; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform .2s, box-shadow .2s; cursor: pointer; border: 2px solid transparent; }
+.download-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); border-color: var(--color-primary); }
+.download-card h3 { font-size: 1.2rem; margin: 0 0 10px 0; color: var(--color-dark); }
+.download-card p { font-size: .9rem; margin: 0; color: #666; }
+@media (max-width: 1400px) { .downloads-grid { grid-template-columns: repeat(5, 1fr); } }
+@media (max-width: 900px) { .downloads-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px) { .downloads-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } .download-card { padding: 15px; } .download-card h3 { font-size: 1rem; } }
+.simple-footer {
+  background: var(--color-dark);
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
+  margin-top: 30px;
+}
+.simple-footer p { margin: 8px 0; font-size: .9rem; }
+
+/* Modal für PDF-Passwort */
+#pdfPasswordModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center; z-index: 10001; display: none; }
+#pdfPasswordModal.show { display: flex; }
+.pdf-password-box { background: #fff; padding: 30px; border-radius: 12px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.pdf-password-box h3 { margin-bottom: 10px; color: var(--color-dark); }
+.pdf-password-box .pdf-name { font-size: .9rem; color: #666; margin-bottom: 20px; }
+.pdf-password-box .password-field input { margin-bottom: 10px; }
+.pdf-password-box .button-group { display: flex; gap: 10px; margin-top: 15px; }
+.pdf-password-box .button-group button { flex: 1; padding: 10px; border: none; border-radius: 8px; font-size: .95rem; font-weight: 600; cursor: pointer; }
+.pdf-password-box .btn-submit { background: var(--color-primary); color: #fff; }
+.pdf-password-box .btn-submit:hover { opacity: .9; }
+.pdf-password-box .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.pdf-password-box .btn-cancel { background: #95a5a6; color: #fff; }
+.pdf-password-box .btn-cancel:hover { background: #7f8c8d; }
+</style>
+</head>
+
+<body>
+<div id="passwordOverlay">
+<div class="password-box">
+<h2>Geschützter Bereich</h2>
+<p class="subtext">Hier beginnt der interne Bereich von praeparo. Alle Lösungen und Downloads sind ausschließlich für autorisierte Nutzer bestimmt.</p>
+<div class="password-field">
+<input type="password" id="passwordInput" placeholder="Passwort eingeben" autocomplete="off">
+<div class="password-toggle" onclick="togglePassword()">
+<svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#444" d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/></svg>
+</div>
+</div>
+<button id="loginBtn" onclick="checkPassword()">Login</button>
+<div class="password-error" id="passwordError">Falsches Passwort</div>
+<div class="password-warning" id="passwordWarning"></div>
+</div>
+</div>
+
+<div id="pdfPasswordModal">
+<div class="pdf-password-box">
+<h3>PDF-Download</h3>
+<p class="pdf-name" id="pdfFileName"></p>
+<div class="password-field">
+<input type="password" id="pdfPasswordInput" placeholder="Passwort für diese PDF eingeben" autocomplete="off">
+<div class="password-toggle" onclick="togglePdfPassword()">
+<svg id="pdfEyeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#444" d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/></svg>
+</div>
+</div>
+<div class="password-error" id="pdfPasswordError">Falsches Passwort</div>
+<div class="password-warning" id="pdfPasswordWarning"></div>
+<div class="button-group">
+<button class="btn-cancel" onclick="closePdfModal()">Abbrechen</button>
+<button class="btn-submit" id="pdfSubmitBtn" onclick="submitPdfPassword()">Download</button>
+</div>
+</div>
+</div>
+
+<header class="navbar">
+<div class="container">
+<div class="logo-container"><a href="index.html"><img src="img/logo.png" alt="Logo" class="logo-img"></a></div>
+<div class="social-icons">
+<a href="https://www.instagram.com/praeparo" target="_blank" rel="noopener"><img src="img/insta.png" alt="Instagram"></a>
+<a href="https://wa.me/4917676069804" target="_blank" rel="noopener"><img src="img/whatsapp.png" alt="WhatsApp"></a>
+<a href="https://www.t.me/praeparo" target="_blank" rel="noopener"><img src="img/telegram.png" alt="Telegram"></a>
+</div>
+</div>
+</header>
+
+<section class="download-section">
+<div class="container">
+<h2>Download: Lösungen der ersten schriftlichen Prüfung</h2>
+<div class="downloads-grid">
+<div class="download-card" onclick="openPdfModal('s1.1')"><h3>s1.1</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s1.2')"><h3>s1.2</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s1.3')"><h3>s1.3</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s1.4')"><h3>s1.4</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s1.5')"><h3>s1.5</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s1.6')"><h3>s1.6</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s1.7')"><h3>s1.7</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s1.8')"><h3>s1.8</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s1.9')"><h3>s1.9</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s1.10')"><h3>s1.10</h3><p>PDF Download</p></div>
+</div>
+</div>
+</section>
+
+<section class="download-section">
+<div class="container">
+<h2>Download: Lösungen der zweiten schriftlichen Prüfung</h2>
+<div class="downloads-grid">
+<div class="download-card" onclick="openPdfModal('s2.1')"><h3>s2.1</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s2.2')"><h3>s2.2</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s2.3')"><h3>s2.3</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s2.4')"><h3>s2.4</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s2.5')"><h3>s2.5</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s2.6')"><h3>s2.6</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s2.7')"><h3>s2.7</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s2.8')"><h3>s2.8</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s2.9')"><h3>s2.9</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s2.10')"><h3>s2.10</h3><p>PDF Download</p></div>
+</div>
+</div>
+</section>
+
+<section class="download-section">
+<div class="container">
+<h2>Download: Lösungen der dritten schriftlichen Prüfung</h2>
+<div class="downloads-grid">
+<div class="download-card" onclick="openPdfModal('s3.1')"><h3>s3.1</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s3.2')"><h3>s3.2</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s3.3')"><h3>s3.3</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s3.4')"><h3>s3.4</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s3.5')"><h3>s3.5</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s3.6')"><h3>s3.6</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s3.7')"><h3>s3.7</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s3.8')"><h3>s3.8</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s3.9')"><h3>s3.9</h3><p>PDF Download</p></div>
+<div class="download-card" onclick="openPdfModal('s3.10')"><h3>s3.10</h3><p>PDF Download</p></div>
+</div>
+</div>
+</section>
+
+<footer class="simple-footer">
+<p>© 2025 praeparo. Alle Rechte vorbehalten.</p>
+<p>Die bereitgestellten Lösungen sind ausschließlich für den persönlichen Gebrauch im Zusammenhang mit unseren Produkten bestimmt. Eine Weitergabe oder Veröffentlichung ist nicht gestattet und kann rechtliche Schritte nach sich ziehen.</p>
+</footer>
+
+<script>
+// ==========================================
+// INTELLIGENTE PFAD-ERKENNUNG
+// ==========================================
+// Standardmäßig leer (für den Live-Server / bplaced)
+let basePath = '';
+
+// Wenn wir lokal auf Port 8000 sind (z.B. php -S localhost:8000), 
+// setzen wir den vollen Pfad, damit der Browser den API-Server findet.
+if (window.location.port === '8000' || window.location.hostname === 'localhost') {
+    basePath = 'http://localhost:8000/';
+}
+
+// Globale Variable für aktuellen PDF-Download
+let currentPdfId = null;
+
+// Login-Funktion
+async function checkPassword() {
+  const input = document.getElementById('passwordInput');
+  const overlay = document.getElementById('passwordOverlay');
+  const error = document.getElementById('passwordError');
+  const warning = document.getElementById('passwordWarning');
+  const loginBtn = document.getElementById('loginBtn');
+
+  const password = input.value.trim();
+
+  if (!password) {
+    error.textContent = 'Bitte Passwort eingeben';
+    error.classList.add('show');
+    setTimeout(() => error.classList.remove('show'), 3000);
+    return;
+  }
+
+  // Button deaktivieren während der Anfrage
+  loginBtn.disabled = true;
+  loginBtn.textContent = 'Prüfe...';
+
+  try {
+    // HIER WIRD basePath GENUTZT:
+    const response = await fetch(basePath + 'api_login.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ password: password })
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      // Login erfolgreich
+      overlay.classList.add('hidden');
+      sessionStorage.setItem('downloads_access', 'granted');
+    } else {
+      // Login fehlgeschlagen
+      error.textContent = data.message || 'Falsches Passwort';
+      error.classList.add('show');
+
+      // Warnung bei verbleibenden Versuchen
+      if (data.remaining_attempts !== undefined && data.remaining_attempts > 0) {
+        warning.textContent = `Noch ${data.remaining_attempts} Versuch(e) übrig`;
+        warning.classList.add('show');
+      }
+
+      input.value = '';
+      setTimeout(() => {
+        error.classList.remove('show');
+        warning.classList.remove('show');
+      }, 5000);
+    }
+  } catch (err) {
+    error.textContent = 'Verbindungsfehler. Bitte erneut versuchen.';
+    error.classList.add('show');
+    setTimeout(() => error.classList.remove('show'), 3000);
+  } finally {
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Login';
+  }
+}
+
+// Passwort-Sichtbarkeit umschalten
+function togglePassword() {
+  const input = document.getElementById('passwordInput');
+  const eyeIcon = document.getElementById('eyeIcon');
+  if (input.type === 'password') {
+    input.type = 'text';
+    eyeIcon.style.opacity = '1';
+  } else {
+    input.type = 'password';
+    eyeIcon.style.opacity = '0.65';
+  }
+}
+
+function togglePdfPassword() {
+  const input = document.getElementById('pdfPasswordInput');
+  const eyeIcon = document.getElementById('pdfEyeIcon');
+  if (input.type === 'password') {
+    input.type = 'text';
+    eyeIcon.style.opacity = '1';
+  } else {
+    input.type = 'password';
+    eyeIcon.style.opacity = '0.65';
+  }
+}
+
+// PDF-Modal öffnen
+function openPdfModal(fileId) {
+  currentPdfId = fileId;
+  document.getElementById('pdfFileName').textContent = `Datei: ${fileId}.pdf`;
+  document.getElementById('pdfPasswordInput').value = '';
+  document.getElementById('pdfPasswordError').classList.remove('show');
+  document.getElementById('pdfPasswordWarning').classList.remove('show');
+  document.getElementById('pdfPasswordModal').classList.add('show');
+
+  // Focus auf Passwort-Input
+  setTimeout(() => {
+    document.getElementById('pdfPasswordInput').focus();
+  }, 100);
+}
+
+// PDF-Modal schließen
+function closePdfModal() {
+  document.getElementById('pdfPasswordModal').classList.remove('show');
+  currentPdfId = null;
+}
+
+// PDF-Passwort absenden und Download starten
+async function submitPdfPassword() {
+  if (!currentPdfId) return;
+
+  const input = document.getElementById('pdfPasswordInput');
+  const error = document.getElementById('pdfPasswordError');
+  const warning = document.getElementById('pdfPasswordWarning');
+  const submitBtn = document.getElementById('pdfSubmitBtn');
+
+  const password = input.value.trim();
+
+  if (!password) {
+    error.textContent = 'Bitte Passwort eingeben';
+    error.classList.add('show');
+    setTimeout(() => error.classList.remove('show'), 3000);
+    return;
+  }
+
+  // Button deaktivieren während der Anfrage
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Prüfe...';
+
+  try {
+    // HIER WIRD basePath GENUTZT:
+    const response = await fetch(basePath + 'api_download.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        file_id: currentPdfId,
+        password: password
+      })
+    });
+
+    if (response.ok) {
+      // Prüfen, ob es eine PDF ist (erfolgreich)
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/pdf')) {
+        // Download starten
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${currentPdfId}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+
+        // Modal schließen
+        closePdfModal();
+      } else {
+        // Fehler als JSON
+        const data = await response.json();
+        error.textContent = data.message || 'Download fehlgeschlagen';
+        error.classList.add('show');
+        setTimeout(() => error.classList.remove('show'), 3000);
+      }
+    } else {
+      // Fehlerhafte Antwort
+      const data = await response.json();
+      error.textContent = data.message || 'Falsches Passwort';
+      error.classList.add('show');
+
+      // Warnung bei verbleibenden Versuchen
+      if (data.remaining_attempts !== undefined && data.remaining_attempts > 0) {
+        warning.textContent = `Noch ${data.remaining_attempts} Versuch(e) übrig`;
+        warning.classList.add('show');
+      }
+
+      input.value = '';
+      setTimeout(() => {
+        error.classList.remove('show');
+        warning.classList.remove('show');
+      }, 5000);
+    }
+  } catch (err) {
+    error.textContent = 'Verbindungsfehler. Bitte erneut versuchen.';
+    error.classList.add('show');
+    setTimeout(() => error.classList.remove('show'), 3000);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Download';
+  }
+}
+
+// Enter-Taste für Login
+document.getElementById('passwordInput').addEventListener('keypress', e => {
+  if (e.key === 'Enter') checkPassword();
+});
+
+// Enter-Taste für PDF-Download
+document.getElementById('pdfPasswordInput').addEventListener('keypress', e => {
+  if (e.key === 'Enter') submitPdfPassword();
+});
+
+// Prüfen, ob bereits eingeloggt
+if (sessionStorage.getItem('downloads_access') === 'granted') {
+  document.getElementById('passwordOverlay').classList.add('hidden');
+}
+
+// Modal schließen bei Klick außerhalb
+document.getElementById('pdfPasswordModal').addEventListener('click', e => {
+  if (e.target.id === 'pdfPasswordModal') {
+    closePdfModal();
+  }
+});
+</script>
+
+</body>
+</html>
