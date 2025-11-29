@@ -61,6 +61,13 @@ body {
 body.no-scroll {
   overflow: hidden;
 }
+@media (max-width: 768px) {
+  body.no-scroll {
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+  }
+}
 .download-section {
   flex: 1;
   margin-bottom: 80px;
