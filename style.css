@@ -1580,47 +1580,27 @@ margin-right: 0 !important;
 box-sizing: border-box !important;
 }
 }
-/* am Ende von style.css oder im Abschnitt #kontakt */
-#kontakt {
-scroll-margin-top: 200px;
-}
 /* Scroll-Tiefen für verschiedene Sektionen (nur Desktop) */
-/* Passe die height und margin-top Werte an (müssen identisch sein, nur mit umgekehrtem Vorzeichen) */
+/* Ändere einfach den scroll-margin-top Wert - je größer, desto mehr Abstand oben */
 
 /* Einzelberatung Button -> scrollt zu #kontakt */
-#kontakt::before {
-content: '';
-display: block;
-height: 50px;      /* <- Scroll-Tiefe anpassen */
-margin-top: -50px; /* <- gleicher Wert mit - */
-visibility: hidden;
+#kontakt {
+  scroll-margin-top: 200px;  /* <- Diese Zahl anpassen */
 }
 
 /* Sprechstunde Button -> scrollt zu #sprechstundentermine */
-#sprechstundentermine::before {
-content: '';
-display: block;
-height: 50px;      /* <- Scroll-Tiefe anpassen */
-margin-top: -50px; /* <- gleicher Wert mit - */
-visibility: hidden;
+#sprechstundentermine {
+  scroll-margin-top: 100px;  /* <- Diese Zahl anpassen */
 }
 
 /* Preise Link (im FAQ) -> scrollt zu #preise */
-#preise::before {
-content: '';
-display: block;
-height: 50px;      /* <- Scroll-Tiefe anpassen */
-margin-top: -50px; /* <- gleicher Wert mit - */
-visibility: hidden;
+#preise {
+  scroll-margin-top: 100px;  /* <- Diese Zahl anpassen */
 }
 
 /* FAQ Button (von oben) -> scrollt zu #faq */
-#faq::before {
-content: '';
-display: block;
-height: 50px;      /* <- Scroll-Tiefe anpassen */
-margin-top: -50px; /* <- gleicher Wert mit - */
-visibility: hidden;
+#faq {
+  scroll-margin-top: 100px;  /* <- Diese Zahl anpassen */
 }
 
 
