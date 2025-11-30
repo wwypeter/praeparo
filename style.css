@@ -617,35 +617,20 @@ margin-top: 0;
 }
 .appointment-card .details {
 width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: flex-start;
-min-height: 110px;
-}
-
-/* Desktop: Immer sichtbar */
-@media (min-width: 601px) {
-.appointment-card .details {
-opacity: 1;
-pointer-events: auto;
-margin-top: 4px;
-}
-}
-
-/* Mobile: Nur sichtbar wenn geöffnet */
-@media (max-width: 600px) {
-.appointment-card .details {
 opacity: 0;
 pointer-events: none;
 transition: opacity 0.35s, margin-top 0.3s;
 margin-top: 0;
+min-height: 110px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: flex-start;
 }
 .appointment-card.open .details {
 opacity: 1;
 pointer-events: auto;
 margin-top: 4px;
-}
 }
 .appointment-card .details li {
 padding: 4px 0;
@@ -1239,11 +1224,25 @@ text-align: left;
 z-index: 1;
 position: relative;
 }
+.appointment-card .details {
+opacity: 0;
+max-height: 0;
+transition: opacity 0.35s, max-height 0.4s;
+margin-top: 0;
+pointer-events: none;
+}
 .appointment-card.open {
 min-height: 170px;
 max-height: 300px;
 height: auto;
 transition: max-height 0.4s, min-height 0.4s, height 0.4s;
+}
+.appointment-card.open .details {
+opacity: 1;
+max-height: 400px;
+margin-top: 4px;
+pointer-events: auto;
+transition: opacity 0.35s, max-height 0.4s, margin-top 0.3s;
 }
 }
 @media (max-width: 600px) {
@@ -1308,24 +1307,61 @@ gap: 14px;
 min-width: 0;
 width: 100%;
 margin: 0;
-padding: 18px 6px 12px 6px;
-min-height: 76px;
+}
+}
+@media (max-width: 600px) {
+.kontakt-cards-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 14px;
+}
+.kontakt-card {
+min-width: 0;
+width: 100%;
+margin: 0;
+padding: 14px 6px 10px 6px;
+min-height: 90px;
+max-height: 120px;
 font-size: 0.96rem;
 }
-.kontakt-card-icon {
-margin-bottom: 1px;
+.kontakt-card-icon img {
+width: 28px;
+height: 28px;
+}
+.kontakt-card-title {
+font-size: 0.96rem;
+margin-bottom: 2px;
+}
+.kontakt-card-info {
+font-size: 0.93rem;
+margin-top: 3px;
+}
+}
+@media (max-width: 600px) {
+.kontakt-cards-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 14px;
+}
+.kontakt-card {
+min-width: 0;
+width: 100%;
+margin: 0;
+padding: 18px 6px 12px 6px;
+min-height: 76px;
+max-height: 110px;
+font-size: 0.96rem;
 }
 .kontakt-card-icon img {
-width: 45px;
-height: 45px;
+width: 28px;
+height: 28px;
 }
 .kontakt-card-title {
 font-size: 1.04rem;
 margin-bottom: 2px;
 }
 .kontakt-card-info {
-font-size: 0.93rem;
-margin-top: 3px;
+display: none;
 }
 }
 @media (max-width: 600px) {
@@ -1538,8 +1574,6 @@ margin-left: 0 !important;
 margin-right: 0 !important;
 box-sizing: border-box !important;
 }
-}
-
 /* Scroll-Tiefen für verschiedene Sektionen (nur Desktop) */
 /* Ändere einfach den scroll-margin-top Wert - je größer, desto mehr Abstand oben */
 
@@ -1562,84 +1596,3 @@ box-sizing: border-box !important;
 #faq {
   scroll-margin-top: 100px;  /* <- Diese Zahl anpassen */
 }
-/* =========================================================
-  MOBILE: READ MORE FUNKTIONALITÄT FÜR S-BLOCK CONTENT
-========================================================= */
-
-/* Desktop: Button verstecken */
-.content-expand-btn {
-  display: none;
-}
-
-@media (max-width: 600px) {
-  /* Expand Button anzeigen */
-  .content-expand-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    cursor: pointer;
-    z-index: 10;
-    transition: transform 0.3s ease, background 0.2s;
-    outline: none;
-  }
-
-  .content-expand-btn svg {
-    transition: transform 0.3s ease;
-    color: var(--color-dark);
-  }
-
-  /* Content-Bereich: Höhe beschränken, relative Position für Gradient */
-  .s-block .content {
-    position: relative;
-    max-height: 180px;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    padding-bottom: 50px;
-  }
-
-  /* Fade-out Gradient */
-  .s-block .content::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: linear-gradient(to bottom, transparent, var(--color-secondary));
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  /* Expanded State: volle Höhe, kein Gradient */
-  .s-block .content.expanded {
-    max-height: 2000px;
-  }
-
-  .s-block .content.expanded::after {
-    opacity: 0;
-  }
-
-  /* Button im Expanded State: Pfeil nach oben */
-  .s-block .content.expanded .content-expand-btn svg {
-    transform: rotate(180deg);
-  }
-
-  .content-expand-btn:hover {
-    background: #f7f8fa;
-  }
-
-  .content-expand-btn:active {
-    transform: translateX(-50%) scale(0.95);
-  }
-}
-
