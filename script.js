@@ -656,3 +656,33 @@ document.getElementById('termine-p').innerHTML  = p.map(t => `<li>${t}</li>`).jo
 }
 
 document.addEventListener('DOMContentLoaded', fillAppointments);
+
+// =========================================================
+// MOBILE: COLLAPSIBLE TEXT MIT SHOW-MORE BUTTON
+// =========================================================
+if (window.innerWidth <= 768) {
+  document.querySelectorAll('.collapsible-text').forEach(block => {
+    const btn = document.createElement('button');
+    btn.className = 'show-more-btn';
+    btn.setAttribute('aria-label', 'Mehr anzeigen');
+    btn.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none">
+        <polyline points="6,9 12,15 18,9"
+          stroke="#333b3d" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `;
+
+    block.appendChild(btn);
+
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      block.classList.toggle('expanded');
+      btn.classList.toggle('open');
+      btn.setAttribute('aria-label',
+        block.classList.contains('expanded') ? 'Weniger anzeigen' : 'Mehr anzeigen'
+      );
+    });
+  });
+}
