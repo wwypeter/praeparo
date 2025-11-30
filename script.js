@@ -88,6 +88,25 @@ item.classList.toggle('open');
 });
 
 // =========================================================
+// S-BLOCK CONTENT: EXPAND/COLLAPSE (MOBILE)
+// =========================================================
+document.querySelectorAll('.content-expand-btn').forEach(btn => {
+btn.addEventListener('click', (e) => {
+e.preventDefault();
+e.stopPropagation();
+const content = btn.parentElement;
+content.classList.toggle('expanded');
+
+// Aria-Label aktualisieren
+if (content.classList.contains('expanded')) {
+btn.setAttribute('aria-label', 'Weniger anzeigen');
+} else {
+btn.setAttribute('aria-label', 'Mehr anzeigen');
+}
+});
+});
+
+// =========================================================
 // HELPER: SCHLIESST ALLE CARDS & LÖSCHT TIMER
 // =========================================================
 function closeAllCards(cards) {

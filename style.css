@@ -1596,3 +1596,83 @@ box-sizing: border-box !important;
 #faq {
   scroll-margin-top: 100px;  /* <- Diese Zahl anpassen */
 }
+/* =========================================================
+  MOBILE: READ MORE FUNKTIONALITÄT FÜR S-BLOCK CONTENT
+========================================================= */
+
+/* Desktop: Button verstecken */
+.content-expand-btn {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  /* Expand Button anzeigen */
+  .content-expand-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.3s ease, background 0.2s;
+    outline: none;
+  }
+
+  .content-expand-btn svg {
+    transition: transform 0.3s ease;
+    color: var(--color-dark);
+  }
+
+  /* Content-Bereich: Höhe beschränken, relative Position für Gradient */
+  .s-block .content {
+    position: relative;
+    max-height: 180px;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding-bottom: 50px;
+  }
+
+  /* Fade-out Gradient */
+  .s-block .content::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--color-secondary));
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Expanded State: volle Höhe, kein Gradient */
+  .s-block .content.expanded {
+    max-height: 2000px;
+  }
+
+  .s-block .content.expanded::after {
+    opacity: 0;
+  }
+
+  /* Button im Expanded State: Pfeil nach oben */
+  .s-block .content.expanded .content-expand-btn svg {
+    transform: rotate(180deg);
+  }
+
+  .content-expand-btn:hover {
+    background: #f7f8fa;
+  }
+
+  .content-expand-btn:active {
+    transform: translateX(-50%) scale(0.95);
+  }
+}
