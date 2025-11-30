@@ -661,7 +661,7 @@ document.addEventListener('DOMContentLoaded', fillAppointments);
 // MOBILE: COLLAPSIBLE TEXT MIT SHOW-MORE BUTTON
 // =========================================================
 if (window.innerWidth <= 768) {
-  document.querySelectorAll('.collapsible-text').forEach(block => {
+  document.querySelectorAll('.s-block .collapsible-text').forEach(block => {
     const btn = document.createElement('button');
     btn.className = 'show-more-btn';
     btn.setAttribute('aria-label', 'Mehr anzeigen');
@@ -673,7 +673,8 @@ if (window.innerWidth <= 768) {
       </svg>
     `;
 
-    block.appendChild(btn);
+    // Button NACH dem collapsible-text Block einfügen
+    block.parentNode.insertBefore(btn, block.nextSibling);
 
     btn.addEventListener('click', (e) => {
       e.preventDefault();
