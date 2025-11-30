@@ -271,7 +271,7 @@ border-bottom: none;
 display: grid;
 grid-template-columns: 2fr 1fr;
 gap: var(--gap);
-align-items: flex-start;
+align-items: center;
 position: relative;
 }
 @media (max-width: 768px) {
