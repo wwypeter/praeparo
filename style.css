@@ -1239,25 +1239,11 @@ text-align: left;
 z-index: 1;
 position: relative;
 }
-.appointment-card .details {
-opacity: 0;
-max-height: 0;
-transition: opacity 0.35s, max-height 0.4s;
-margin-top: 0;
-pointer-events: none;
-}
 .appointment-card.open {
 min-height: 170px;
 max-height: 300px;
 height: auto;
 transition: max-height 0.4s, min-height 0.4s, height 0.4s;
-}
-.appointment-card.open .details {
-opacity: 1;
-max-height: 400px;
-margin-top: 4px;
-pointer-events: auto;
-transition: opacity 0.35s, max-height 0.4s, margin-top 0.3s;
 }
 }
 @media (max-width: 600px) {
